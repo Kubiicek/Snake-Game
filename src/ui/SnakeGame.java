@@ -58,37 +58,55 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
 		gameLoop.start();
 	}
 	
+	@Override
 	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		draw(g);
+	    super.paintComponent(g);
+	    drawBackground(g);  
+	    draw(g);  
+	}
+
+	public void drawBackground(Graphics g) {
+	    Color mediumGreen = new Color(34, 139, 34);
+	    Color darkGreen = new Color(0, 100, 0); 
+	    
+	    for (int row = 0; row < boardHeight / tileSize; row++) {
+	        for (int col = 0; col < boardWidth / tileSize; col++) {
+	            if ((row + col) % 2 == 0) {
+	                g.setColor(mediumGreen);
+	            } else {
+	                g.setColor(darkGreen);
+	            }
+	            g.fillRect(col * tileSize, row * tileSize, tileSize, tileSize);
+	        }
+	    }
 	}
 	 
 	public void draw(Graphics g) {
-		
-		//Food
-		g.setColor(Color.red);
-		g.fill3DRect(food.x * tileSize, food.y * tileSize, tileSize, tileSize, true);
-		
-		//Snake Head
-		g.setColor(Color.blue);
-		g.fill3DRect(snakeHead.x * tileSize, snakeHead.y * tileSize, tileSize, tileSize, true);
-		
-		//Snake Body
-		for (int i = 0; i < snakeBody.size(); i++) {
-			Tile snakePart = snakeBody.get(i);
-			g.fill3DRect(snakePart.x * tileSize, snakePart.y * tileSize, tileSize, tileSize, true);
-		}
-		
-		//Score
-		g.setFont(new Font("Arial", Font.PLAIN, 16));
-		if (gameOver) {
-			g.setColor(Color.red);
-			g.drawString("Game Over: " + String.valueOf(snakeBody.size()), tileSize - 16, tileSize);
-		} else {
-			g.drawString("Score: " + String.valueOf(snakeBody.size()), tileSize - 16, tileSize);
-		}
+	    
+	    // Food 
+	    g.setColor(Color.red);
+	    g.fillOval(food.x * tileSize, food.y * tileSize, tileSize, tileSize);
+	    
+	    // Snake Head
+	    g.setColor(Color.blue);
+	    g.fill3DRect(snakeHead.x * tileSize, snakeHead.y * tileSize, tileSize, tileSize, true);
+	    
+	    // Snake Body
+	    for (int i = 0; i < snakeBody.size(); i++) {
+	        Tile snakePart = snakeBody.get(i);
+	        g.fill3DRect(snakePart.x * tileSize, snakePart.y * tileSize, tileSize, tileSize, true);
+	    }
+	    
+	    // Score
+	    g.setFont(new Font("Arial", Font.PLAIN, 16));
+	    if (gameOver) {
+	        g.setColor(Color.red);
+	        g.drawString("Game Over: " + String.valueOf(snakeBody.size()), tileSize - 16, tileSize);
+	    } else {
+	        g.drawString("Score: " + String.valueOf(snakeBody.size()), tileSize - 16, tileSize);
+	    }
 	}
-	
+
 	public void placeFood() {
 		food.x = random.nextInt(boardWidth / tileSize);
 		food.y = random.nextInt(boardHeight / tileSize);

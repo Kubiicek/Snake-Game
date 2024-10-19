@@ -60,6 +60,14 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
 	}
 
 	
+	public int getScore() {
+		return snakeBody.size();
+	}
+	
+	public boolean isGameOver() {
+		return gameOver;
+	}
+	
 	@Override
 	public void paintComponent(Graphics g) {
 	    super.paintComponent(g);
@@ -97,7 +105,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
 
 	 
 	public void draw(Graphics g, int offset) {
-	    // Food 
+	    // Food
 	    g.setColor(Color.red);
 	    g.fillOval(offset + food.x * tileSize, offset + food.y * tileSize, tileSize, tileSize);
 	    
@@ -110,16 +118,8 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
 	        Tile snakePart = snakeBody.get(i);
 	        g.fill3DRect(offset + snakePart.x * tileSize, offset + snakePart.y * tileSize, tileSize, tileSize, true);
 	    }
-	    
-	    // Score
-	    g.setFont(new Font("Arial", Font.PLAIN, 16));
-	    if (gameOver) {
-	        g.setColor(Color.red);
-	        g.drawString("Game Over: " + String.valueOf(snakeBody.size()), offset + tileSize - 16, offset + tileSize);
-	    } else {
-	        g.drawString("Score: " + String.valueOf(snakeBody.size()), offset + tileSize - 16, offset + tileSize);
-	    }
 	}
+
 
 
 
